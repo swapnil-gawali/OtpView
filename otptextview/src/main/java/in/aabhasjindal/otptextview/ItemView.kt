@@ -66,7 +66,7 @@ class ItemView : FrameLayout {
 
         val otpTextSize = styles.getDimension(R.styleable.OtpTextView_otp_text_size, defaultOtpTextSize)
 
-        val otpTextTypeFace = styles.getString(R.styleable.OtpTextView_text_typeface)
+        val otpTextTypeFace = styles.getInteger(R.styleable.OtpTextView_text_typeface, 0)
         val boxBackgroundColor = styles.getResourceId(R.styleable.OtpTextView_otp_box_background, ResourcesCompat.getColor(context.resources, R.color.transparent, null))
         boxBackgroundColorActive = styles.getResourceId(R.styleable.OtpTextView_otp_box_background_active, boxBackgroundColor)
         boxBackgroundColorInactive = styles.getResourceId(R.styleable.OtpTextView_otp_box_background_inactive, boxBackgroundColor)
@@ -83,9 +83,9 @@ class ItemView : FrameLayout {
         textViewParams.gravity = Gravity.CENTER
         textView = TextView(context)
         textView?.gravity = Gravity.CENTER
-        if (otpTextTypeFace != null) {
+        if (otpTextTypeFace != 0) {
             try {
-                val tf = Typeface.createFromAsset(context.assets, otpTextTypeFace)
+                val tf = ResourcesCompat.getFont(context, otpTextTypeFace)
                 textView?.typeface = tf
             } catch (e: Exception) {
                 e.printStackTrace()

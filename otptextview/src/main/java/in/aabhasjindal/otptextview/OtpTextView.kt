@@ -9,10 +9,13 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat.getSystemService
 import java.util.*
 import java.util.regex.Pattern
+
 
 class OtpTextView : FrameLayout {
 
@@ -171,7 +174,13 @@ class OtpTextView : FrameLayout {
     }
 
     fun requestFocusOTP() {
-        otpChildEditText?.requestFocus()
+
+        otpChildEditText?.let {
+            it.requestFocus()
+            val imm: InputMethodManager = context.getSystemService(
+                    Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 
     fun showError() {
